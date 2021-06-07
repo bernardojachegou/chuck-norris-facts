@@ -5,10 +5,13 @@ import PKHUD
 class FactsViewController: BaseViewController {
     private var viewModel = FactsViewModel()
     
-    private var factCard: UILabel = {
+    private var factCards: [FactCard] = []
+    private var noFactsMessageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Chuck Norris"
+        label.text = "No facts yet. Try searching for facts!"
         label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .darkGray
         return label
     }()
     
@@ -20,7 +23,10 @@ class FactsViewController: BaseViewController {
     }
     
     override func getContentView() -> UIView {
-        return factCard
+        if factCards.isEmpty {
+            return noFactsMessageLabel
+        }
+        return renderFactCards()
     }
     
     private func setupNavBar() {
@@ -42,8 +48,17 @@ class FactsViewController: BaseViewController {
         
         viewModel.output.categories
             .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { [weak self] categories in
-                self?.factCard.text = categories?.joined(separator: ", ")
+            .drive(onNext: { categories in
+                print(categories?.joined(separator: ", ") ?? "no categories")
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.output.facts
+            .asDriver(onErrorDriveWith: .just([]))
+            .drive(onNext: { [weak self] facts in
+                guard let facts = facts else { return }
+                self?.factCards = facts.map { FactCard(fact: $0) }
+                self?.reloadContentView()
             })
             .disposed(by: disposeBag)
 
@@ -51,6 +66,27 @@ class FactsViewController: BaseViewController {
     
     private func loadData() {
         viewModel.fetchCategories()
+        viewModel.fetchFactByKeyword("dev")
+    }
+    
+    private func renderFactCards() -> UIView {
+        let list = UIView()
+        let stack = UIStackView()
+        
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.spacing = 8
+        
+        factCards.forEach { fact in
+            stack.addArrangedSubview(fact)
+        }
+        
+        list.addSubview(stack)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.fillParentView(padding: 0)
+        
+        return list
     }
     
     @objc private func openSearch() {

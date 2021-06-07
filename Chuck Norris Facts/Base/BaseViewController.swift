@@ -6,6 +6,7 @@ class BaseViewController: UIViewController {
     internal lazy var disposeBag = DisposeBag()
     private weak var scrollView: UIScrollView?
     private weak var mainStackView: UIStackView?
+    private var contentView: UIView?
     
     public override func loadView() {
         super.loadView()
@@ -58,14 +59,23 @@ class BaseViewController: UIViewController {
         mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16).isActive = true
         mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16).isActive = true
         mainStackView.widthAnchor.constraint(equalToConstant: view.bounds.width - 32).isActive = true
+    }
+    
+    private func setupContentView() {
+        if let oldContentView = contentView {
+            oldContentView.removeFromSuperview()
+        }
         
-        let fieldView = getContentView()
-        fieldView.translatesAutoresizingMaskIntoConstraints = false
-        mainStackView.addArrangedSubview(fieldView)
+        
+        let newContentView = getContentView()
+        newContentView.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView?.addArrangedSubview(newContentView)
+        contentView = newContentView
     }
     
     private func setup() {
         setupParentView()
+        setupContentView()
         didSetup()
     }
     
@@ -73,6 +83,10 @@ class BaseViewController: UIViewController {
     
     public func getContentView() -> UIView {
         return UIView()
+    }
+    
+    public func reloadContentView() {
+        setupContentView()
     }
 }
 
