@@ -1,6 +1,8 @@
 import Foundation
 import Toaster
 import PKHUD
+import RxSwift
+import RxCocoa
 
 class FactsViewController: BaseViewController {
     private var viewModel = FactsViewModel()
@@ -19,7 +21,6 @@ class FactsViewController: BaseViewController {
         super.didSetup()
         setupNavBar()
         setupBindings()
-        loadData()
     }
     
     override func getContentView() -> UIView {
@@ -62,11 +63,6 @@ class FactsViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
 
-    }
-    
-    private func loadData() {
-        viewModel.fetchCategories()
-        viewModel.fetchFactByKeyword("dev")
     }
     
     private func renderFactCards() -> UIView {
