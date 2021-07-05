@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F512F1AB663E1E2E1E70F2F /* Pods_CN_Facts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ADD679A3DDA45465227BBC4 /* Pods_CN_Facts.framework */; };
+		FA1C1E5F2693A04600DA19B9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C1E5E2693A04600DA19B9 /* UIColor.swift */; };
 		FA1F07AD266150900039FA82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07AC266150900039FA82 /* AppDelegate.swift */; };
 		FA1F07AF266150900039FA82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07AE266150900039FA82 /* SceneDelegate.swift */; };
 		FA1F07B1266150900039FA82 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07B0266150900039FA82 /* BaseViewController.swift */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		2ADD679A3DDA45465227BBC4 /* Pods_CN_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CN_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		994C26349D63E1B171E669A0 /* Pods-CN Facts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CN Facts.debug.xcconfig"; path = "Target Support Files/Pods-CN Facts/Pods-CN Facts.debug.xcconfig"; sourceTree = "<group>"; };
+		FA1C1E5E2693A04600DA19B9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		FA1F07A9266150900039FA82 /* CN Facts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CN Facts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1F07AC266150900039FA82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA1F07AE266150900039FA82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				FACE13D8266DD51000D66AA3 /* UIStackView.swift */,
 				FACE13DA266DD55A00D66AA3 /* UIView.swift */,
+				FA1C1E5E2693A04600DA19B9 /* UIColor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				FACE13C5266DAF9B00D66AA3 /* FactsViewModel.swift in Sources */,
 				FA1F07AD266150900039FA82 /* AppDelegate.swift in Sources */,
 				FACE13D6266DD43E00D66AA3 /* FactCard.swift in Sources */,
+				FA1C1E5F2693A04600DA19B9 /* UIColor.swift in Sources */,
 				FACE13D4266DC98700D66AA3 /* ActivityIndicator.swift in Sources */,
 				FA1F07AF266150900039FA82 /* SceneDelegate.swift in Sources */,
 				FACE13D9266DD51000D66AA3 /* UIStackView.swift in Sources */,
