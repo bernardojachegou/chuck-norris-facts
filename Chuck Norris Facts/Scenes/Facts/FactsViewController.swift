@@ -5,9 +5,10 @@ import RxSwift
 import RxCocoa
 
 class FactsViewController: BaseViewController {
-    private var viewModel = FactsViewModel()
     
+    private var viewModel = FactsViewModel()
     private var factCards: [FactCard] = []
+    
     private var noFactsMessageLabel: UILabel = {
         let label = UILabel()
         label.text = "No facts yet. Try searching for facts!"
@@ -31,6 +32,7 @@ class FactsViewController: BaseViewController {
     }
     
     private func setupNavBar() {
+        setTitle("Chuck Norris")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(openSearch))
     }
     
@@ -58,11 +60,16 @@ class FactsViewController: BaseViewController {
             .asDriver(onErrorDriveWith: .just([]))
             .drive(onNext: { [weak self] facts in
                 guard let facts = facts else { return }
-                self?.factCards = facts.map { FactCard(fact: $0) }
+                self?.factCards = facts.map { FactCard(fact: $0) { factUrlString in
+                    self?.shareUrlString(factUrlString)
+                } }
                 self?.reloadContentView()
             })
             .disposed(by: disposeBag)
 
+        
+        viewModel.input.keyword.onNext("messi")
+        viewModel.input.category.onNext("sport")
     }
     
     private func renderFactCards() -> UIView {
@@ -87,5 +94,14 @@ class FactsViewController: BaseViewController {
     
     @objc private func openSearch() {
         print("open search")
+    }
+}
+
+extension FactsViewController {
+    fileprivate func shareUrlString(_ shareableURLString: String) {
+        guard let shareableURL = URL(string: shareableURLString), UIApplication.shared.canOpenURL(shareableURL) else {
+            return
+        }
+        UIApplication.shared.open(shareableURL, options: [:], completionHandler: nil)
     }
 }

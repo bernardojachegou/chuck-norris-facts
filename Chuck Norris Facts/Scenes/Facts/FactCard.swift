@@ -2,6 +2,9 @@ import UIKit
 
 class FactCard: UIView {
     
+    
+    private var onShareButtonTap: ((String) -> ())?
+    
     private var fact: FactModel!
     
     private var stack: UIStackView = {
@@ -14,16 +17,47 @@ class FactCard: UIView {
         return stack
     }()
     
+    private var actionRowStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.alignment = .fill
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        return stack
+    }()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .darkText
         label.numberOfLines = 0
         return label
     }()
     
-    init(fact: FactModel) {
+    private var categoriesStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .leading
+        stack.distribution = .fillProportionally
+        stack.spacing = 4
+        return stack
+    }()
+    
+    private var shareButton: UIButton = {
+        let button = UIButton()
+        let icon = UIImage(systemName: "square.and.arrow.up")?.withTintColor(.primaryColor)
+        button.setImage(icon, for: .normal)
+        button.tintColor = .primaryColor
+        button.setTitleColor(.primaryColor, for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        return button
+    }()
+    
+    init(fact: FactModel, onSharing: ((String) -> ())? = nil) {
         super.init(frame: .zero)
         self.fact = fact
+        self.onShareButtonTap = onSharing
         setupCard()
     }
     
@@ -43,15 +77,48 @@ class FactCard: UIView {
         layer.shadowRadius = 2
         layer.shadowOpacity = 0.2
         
+        actionRowStack.addArrangedSubview(categoriesStack)
+        actionRowStack.addArrangedSubview(shareButton)
+        
         stack.removeAllArrangedSubviews()
         stack.fillParentView(padding: 8)
         stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(actionRowStack)
+        
         setupTitle()
+        
+        let categories = fact.categories.isEmpty ? ["uncategorized", "category 1", "category 2", "category 3"] : fact.categories
+        categories.prefix(3).forEach { category in
+            categoriesStack.addArrangedSubview(getCategoryLabelPill(category))
+        }
+    }
+    
+    private func getCategoryLabelPill(_ category: String) -> UIView {
+        let pill = UIView()
+        let label = UILabel()
+        label.text = category
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 10)
+        label.textAlignment = .center
+        pill.backgroundColor = .primaryColor
+        pill.layer.cornerRadius = 4
+        pill.clipsToBounds = true
+        pill.addSubview(label)
+        label.fillParentView(padding: 4)
+        return pill
+    }
+    
+    private func getFontSizeForContent() -> CGFloat {
+        return fact.value.lengthOfBytes(using: .utf8) > 80 ? 12 : 22
     }
     
     private func setupTitle() {
         titleLabel.text = fact.value
-        // check font
+        titleLabel.font = .systemFont(ofSize: getFontSizeForContent())
+    }
+    
+    @objc private func shareButtonTapped() {
+        onShareButtonTap?(fact.url)
     }
     
 }

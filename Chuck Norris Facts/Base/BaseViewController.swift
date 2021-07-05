@@ -10,7 +10,10 @@ class BaseViewController: UIViewController {
     
     public override func loadView() {
         super.loadView()
+        setupNavigation()
         setupStructure()
+        setup()
+        didSetup()
     }
     
     private func setupStructure() {
@@ -31,9 +34,20 @@ class BaseViewController: UIViewController {
         
         self.scrollView = scrollView
         self.mainStackView = mainStackView
-        
+    }
+    
+    private func setupNavigation() {
         navigationItem.backButtonTitle = ""
-        setup()
+        
+        if let navbar = navigationController?.navigationBar {
+            navbar.backgroundColor = .primaryColor
+            navbar.isTranslucent = false
+            navbar.barTintColor = .primaryColor
+            navbar.tintColor = .white
+            navbar.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.white
+            ]
+        }
     }
     
     private func setupScrollViewConstraints(_ distance: CGFloat = 0) {
@@ -76,7 +90,6 @@ class BaseViewController: UIViewController {
     private func setup() {
         setupParentView()
         setupContentView()
-        didSetup()
     }
     
     public func didSetup() {}
@@ -87,6 +100,10 @@ class BaseViewController: UIViewController {
     
     public func reloadContentView() {
         setupContentView()
+    }
+    
+    public func setTitle(_ newTitle: String) {
+        title = newTitle
     }
 }
 
