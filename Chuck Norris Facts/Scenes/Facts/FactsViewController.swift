@@ -18,6 +18,8 @@ class FactsViewController: BaseViewController {
         return label
     }()
     
+    public var onOpenSearch: (() -> ())?
+    
     override func didSetup() {
         super.didSetup()
         setupNavBar()
@@ -93,7 +95,7 @@ class FactsViewController: BaseViewController {
     }
     
     @objc private func openSearch() {
-        print("open search")
+        onOpenSearch?()
     }
 }
 
