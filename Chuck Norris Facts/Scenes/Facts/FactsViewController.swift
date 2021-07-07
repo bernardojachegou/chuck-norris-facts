@@ -43,8 +43,7 @@ class FactsViewController: BaseViewController {
         
         viewModel.output.loading
             .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] loading in
-                self?.noFactsMessageLabel.text = nil
+            .drive(onNext: { loading in
                 if loading {
                     HUD.show(.progress)
                 } else {
@@ -94,6 +93,7 @@ class FactsViewController: BaseViewController {
     }
     
     private func processFacts(_ facts: [FactModel]?) {
+        factCards = []
         if let facts = facts, !facts.isEmpty {
             factCards = facts.map { FactCard(fact: $0) { [weak self] factUrlString in
                 self?.shareUrlString(factUrlString)

@@ -112,11 +112,12 @@ class BaseViewController: UIViewController {
         title = newTitle
     }
     
-    public func sectionTitle(_ titleString: String) -> UIView {
+    public func sectionTitle(_ titleString: String, textColor: UIColor = .darkText) -> UIView {
         let holder = UIView()
         let label = UILabel()
         label.text = titleString
         label.font = .boldSystemFont(ofSize: 12)
+        label.textColor = textColor
         holder.addSubview(label)
         label.fillParentView(padding: 4)
         return holder
