@@ -10,7 +10,7 @@ class Coordinator {
     
     public func start() {
         setupNavigationController()
-        goToFacts()
+        goToSearch()
     }
     
     private func goToFacts() {
@@ -23,7 +23,8 @@ class Coordinator {
     
     private func goToSearch() {
         let searchViewController = SearchViewController()
-        navigationController.present(searchViewController, animated: true)
+//        navigationController.present(searchViewController, animated: true)
+        navigationController.pushViewController(searchViewController, animated: true)
     }
     
 }

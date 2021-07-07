@@ -7,7 +7,6 @@ public class TagCellLayout: UICollectionViewLayout {
 	var layoutInfoList: [LayoutInfo] = []
 	var numberOfTagsInCurrentRow = 0
 	var currentTagIndex: Int = 0
-
 	
 	var delegate: TagCellLayoutDelegate?
 	
