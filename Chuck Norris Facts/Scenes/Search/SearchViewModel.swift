@@ -46,45 +46,33 @@ class SearchViewModel {
         )
         
         setupBindings()
-        fetchCategories()
     }
     
-    private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
-        activityTracker.accept(true)
-        httpClient.doGET(
-            host: .general,
-            toPath: path,
-            withHeaders: nil,
-            withParameters: parameters,
-            responseType: T.self
-        ) { [weak self] (error, response) in
-            self?.activityTracker.accept(false)
-            if let error = error {
-                self?.errorSubject.accept(error)
-                return
-            }
-            completion(response)
+    public func fetchCategories() {
+        if let categories = UserDefaults.standard.array(forKey: "OFFLINE_CATEGORIES") as? [String] {
+            categoriesSubject.accept(categories)
         }
     }
     
-    private func fetchCategories() {
-        fetchFromApi(
-            responseType: [String].self,
-            path: ApiPath.categories
-        ) { [weak self] response in
-            self?.categoriesSubject.accept(response)
+    public func fetchSavedSearches() {
+        if let searches = loadSearchesLocally() {
+            savedSearchesSubject.onNext(searches)
         }
     }
     
     private func setupBindings() {
+        
+        keywordSubject
+            .subscribe { [weak self] keyword in
+                self?.saveSearchLocally(keyword)
+            }
+            .disposed(by: disposeBag)
         
         keywordSubject.bind(to: searchByTermSubject)
             .disposed(by: disposeBag)
         
         categorySubject.bind(to: searchByCategorySubject)
             .disposed(by: disposeBag)
-        
-        savedSearchesSubject.onNext(["Jesus", "Messi", "Games"])
         
     }
     
@@ -94,6 +82,19 @@ class SearchViewModel {
         }
         let result = [String](items.shuffled().prefix(8))
         return result
+    }
+    
+    private func loadSearchesLocally() -> [String]? {
+        return UserDefaults.standard.array(forKey: "OFFLINE_SEARCHES") as? [String]
+    }
+    
+    private func saveSearchLocally(_ keyword: String) {
+        let searches = loadSearchesLocally() ?? []
+        let newSearches = [keyword] + searches.filter({ item in
+            return item.normalized() != keyword.normalized()
+        })
+        UserDefaults.standard.setValue(newSearches, forKey: "OFFLINE_SEARCHES")
+        UserDefaults.standard.synchronize()
     }
     
 }

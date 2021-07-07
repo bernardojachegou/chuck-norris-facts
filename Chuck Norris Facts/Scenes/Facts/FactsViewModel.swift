@@ -9,7 +9,7 @@ class FactsViewModel {
         let loading: Observable<Bool>
         let categories: Observable<[String]?>
         let facts: Observable<[FactModel]?>
-        let error: Observable<ErrorHandleable>
+        let error: Observable<GenericError>
     }
     
     struct Input {
@@ -22,7 +22,7 @@ class FactsViewModel {
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
     private let factsSubject = PublishRelay<[FactModel]?>()
-    private let errorSubject = PublishRelay<ErrorHandleable>()
+    private let errorSubject = PublishRelay<GenericError>()
     
     private let keywordSubject = BehaviorSubject<String?>(value: nil)
     private let categorySubject = BehaviorSubject<String?>(value: nil)
@@ -44,6 +44,7 @@ class FactsViewModel {
         )
         
         setupBindings()
+        fetchCategories()
     }
     
     private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
@@ -74,6 +75,15 @@ class FactsViewModel {
         }
     }
     
+    private func fetchCategories() {
+        fetchFromApi(
+            responseType: [String].self,
+            path: ApiPath.categories
+        ) { [weak self] response in
+            self?.saveCategoriesLocally(response ?? [])
+        }
+    }
+    
     private func setupBindings() {
         
         keywordSubject
@@ -81,7 +91,6 @@ class FactsViewModel {
                 self?.fetchByFilters(keyword: keyword)
             }
             .disposed(by: disposeBag)
-        
         
         categorySubject
             .subscribe { [weak self] category in
@@ -96,6 +105,11 @@ class FactsViewModel {
             return
         }
         fetchFactByKeyword(keyword)
+    }
+    
+    private func saveCategoriesLocally(_ categories: [String]) {
+        UserDefaults.standard.setValue(categories, forKey: "OFFLINE_CATEGORIES")
+        UserDefaults.standard.synchronize()
     }
     
 }

@@ -36,9 +36,13 @@ class SearchViewController: BaseViewController {
     
     override func didSetup() {
         super.didSetup()
+        
         setupNavBar()
         setupBindings()
         setupLayout()
+        
+        viewModel.fetchCategories()
+        viewModel.fetchSavedSearches()
     }
     
     override func getContentView() -> UIView {

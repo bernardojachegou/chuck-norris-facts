@@ -43,7 +43,8 @@ class FactsViewController: BaseViewController {
         
         viewModel.output.loading
             .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { loading in
+            .drive(onNext: { [weak self] loading in
+                self?.noFactsMessageLabel.text = nil
                 if loading {
                     HUD.show(.progress)
                 } else {
@@ -52,21 +53,18 @@ class FactsViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.output.categories
-            .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { categories in
-                print(categories?.joined(separator: ", ") ?? "no categories")
-            })
+        viewModel.output.error
+            .asDriver(onErrorDriveWith: .empty())
+            .drive { [weak self] error in
+                self?.noFactsMessageLabel.text = error.message()
+                self?.displayError(error)
+            }
             .disposed(by: disposeBag)
         
         viewModel.output.facts
             .asDriver(onErrorDriveWith: .just([]))
             .drive(onNext: { [weak self] facts in
-                guard let facts = facts else { return }
-                self?.factCards = facts.map { FactCard(fact: $0) { factUrlString in
-                    self?.shareUrlString(factUrlString)
-                } }
-                self?.reloadContentView()
+                self?.processFacts(facts)
             })
             .disposed(by: disposeBag)
     }
@@ -93,6 +91,18 @@ class FactsViewController: BaseViewController {
     
     @objc private func openSearch() {
         onOpenSearch?()
+    }
+    
+    private func processFacts(_ facts: [FactModel]?) {
+        if let facts = facts, !facts.isEmpty {
+            factCards = facts.map { FactCard(fact: $0) { [weak self] factUrlString in
+                self?.shareUrlString(factUrlString)
+            } }
+        } else {
+            noFactsMessageLabel.text = "Your search has no results, try another term"
+        }
+        
+        reloadContentView()
     }
 }
 

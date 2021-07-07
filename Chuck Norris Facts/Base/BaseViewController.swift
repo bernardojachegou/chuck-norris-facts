@@ -1,5 +1,7 @@
 import UIKit
+import Toaster
 import RxSwift
+import Networking
 
 class BaseViewController: UIViewController {
 
@@ -90,6 +92,10 @@ class BaseViewController: UIViewController {
     private func setup() {
         setupParentView()
         setupContentView()
+    }
+    
+    public func displayError(_ error: GenericError) {
+        Toast(text: error.message(), duration: 3).show()
     }
     
     public func didSetup() {}
