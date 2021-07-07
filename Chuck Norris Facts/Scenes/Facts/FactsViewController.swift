@@ -18,6 +18,9 @@ class FactsViewController: BaseViewController {
         return label
     }()
     
+    public var onOpenSearch: (() -> ())?
+    public var onCloseSearch: (() -> ())?
+    
     override func didSetup() {
         super.didSetup()
         setupNavBar()
@@ -66,10 +69,6 @@ class FactsViewController: BaseViewController {
                 self?.reloadContentView()
             })
             .disposed(by: disposeBag)
-
-        
-        viewModel.input.keyword.onNext("messi")
-        viewModel.input.category.onNext("sport")
     }
     
     private func renderFactCards() -> UIView {
@@ -93,7 +92,7 @@ class FactsViewController: BaseViewController {
     }
     
     @objc private func openSearch() {
-        print("open search")
+        onOpenSearch?()
     }
 }
 
@@ -103,5 +102,17 @@ extension FactsViewController {
             return
         }
         UIApplication.shared.open(shareableURL, options: [:], completionHandler: nil)
+    }
+}
+
+extension FactsViewController: SearchViewControllerDelegate {
+    func searchBy(keyword: String) {
+        viewModel.input.keyword.onNext(keyword)
+        onCloseSearch?()
+    }
+    
+    func searchBy(category: String) {
+        viewModel.input.category.onNext(category)
+        onCloseSearch?()
     }
 }

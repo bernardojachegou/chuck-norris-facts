@@ -1,7 +1,7 @@
 import UIKit
 
 class FactCard: UIView {
-    
+    private let factSizeForSmallerFont = 80
     
     private var onShareButtonTap: ((String) -> ())?
     
@@ -13,7 +13,7 @@ class FactCard: UIView {
         stack.alignment = .fill
         stack.axis = .vertical
         stack.distribution = .fill
-        stack.spacing = 4
+        stack.spacing = 8
         return stack
     }()
     
@@ -33,13 +33,21 @@ class FactCard: UIView {
         return label
     }()
     
-    private var categoriesStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .leading
-        stack.distribution = .fillProportionally
-        stack.spacing = 4
-        return stack
+    private var categoriesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
+    private var iconImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "chuckNorris"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.heightAnchor.constraint(equalToConstant: 54).isActive = true
+        return imageView
     }()
     
     private var shareButton: UIButton = {
@@ -77,20 +85,29 @@ class FactCard: UIView {
         layer.shadowRadius = 2
         layer.shadowOpacity = 0.2
         
-        actionRowStack.addArrangedSubview(categoriesStack)
+        let actionHolder = UIView()
+        actionHolder.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        actionHolder.layer.cornerRadius = 4
+        actionHolder.clipsToBounds = true
+        let holder = UIView()
+        holder.translatesAutoresizingMaskIntoConstraints = false
+        holder.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        actionRowStack.addArrangedSubview(holder)
+        actionRowStack.addArrangedSubview(categoriesLabel)
         actionRowStack.addArrangedSubview(shareButton)
+        actionHolder.addSubview(actionRowStack)
+        actionRowStack.fillParentView(padding: 4)
         
         stack.removeAllArrangedSubviews()
         stack.fillParentView(padding: 8)
+        stack.addArrangedSubview(actionHolder)
         stack.addArrangedSubview(titleLabel)
-        stack.addArrangedSubview(actionRowStack)
+        stack.addArrangedSubview(iconImageView)
         
         setupTitle()
         
-        let categories = fact.categories.isEmpty ? ["uncategorized", "category 1", "category 2", "category 3"] : fact.categories
-        categories.prefix(3).forEach { category in
-            categoriesStack.addArrangedSubview(getCategoryLabelPill(category))
-        }
+        let categories = fact.categories.isEmpty ? ["uncategorized"] : fact.categories
+        categoriesLabel.text = categories.map { $0.uppercased() }.joined(separator: ", ")
     }
     
     private func getCategoryLabelPill(_ category: String) -> UIView {
@@ -109,7 +126,7 @@ class FactCard: UIView {
     }
     
     private func getFontSizeForContent() -> CGFloat {
-        return fact.value.lengthOfBytes(using: .utf8) > 80 ? 12 : 22
+        return fact.value.lengthOfBytes(using: .utf8) > factSizeForSmallerFont ? 12 : 16
     }
     
     private func setupTitle() {

@@ -17,9 +17,10 @@ class BaseViewController: UIViewController {
     }
     
     private func setupStructure() {
+        view.backgroundColor = .white
+        
         let scrollView = UIScrollView(frame: .zero)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .white
         
         let mainStackView = UIStackView(frame: .zero)
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +28,6 @@ class BaseViewController: UIViewController {
         mainStackView.spacing = 0
         mainStackView.alignment = .fill
         mainStackView.distribution = .fill
-        mainStackView.backgroundColor = .clear
         
         view.addSubview(scrollView)
         scrollView.addSubview(mainStackView)
@@ -104,6 +104,20 @@ class BaseViewController: UIViewController {
     
     public func setTitle(_ newTitle: String) {
         title = newTitle
+    }
+    
+    public func sectionTitle(_ titleString: String) -> UIView {
+        let holder = UIView()
+        let label = UILabel()
+        label.text = titleString
+        label.font = .boldSystemFont(ofSize: 12)
+        holder.addSubview(label)
+        label.fillParentView(padding: 4)
+        return holder
+    }
+    
+    public func spacer(_ size: CGFloat = 8) -> UIView {
+        return UIView(frame: CGRect(x: 0, y: 0, width: 0, height: size))
     }
 }
 

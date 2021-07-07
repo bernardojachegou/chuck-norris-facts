@@ -3,39 +3,41 @@ import Networking
 import RxCocoa
 import RxSwift
 
-class FactsViewModel {
+class SearchViewModel {
     
     struct Output {
-        let loading: Observable<Bool>
         let categories: Observable<[String]?>
-        let facts: Observable<[FactModel]?>
-        let error: Observable<ErrorHandleable>
+        let savedSearches: Observable<[String]?>
+        let searchByTerm: Observable<String>
+        let searchByCategory: Observable<String>
     }
     
     struct Input {
-        let keyword: BehaviorSubject<String?>
-        let category: BehaviorSubject<String?>
+        let keyword: PublishSubject<String>
+        let category: PublishSubject<String>
     }
     
     private let httpClient = HttpClient()
     private let disposeBag = DisposeBag()
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
-    private let factsSubject = PublishRelay<[FactModel]?>()
     private let errorSubject = PublishRelay<ErrorHandleable>()
     
-    private let keywordSubject = BehaviorSubject<String?>(value: nil)
-    private let categorySubject = BehaviorSubject<String?>(value: nil)
+    private let savedSearchesSubject = BehaviorSubject<[String]?>(value: nil)
+    private let keywordSubject = PublishSubject<String>()
+    private let categorySubject = PublishSubject<String>()
+    private let searchByTermSubject = PublishSubject<String>()
+    private let searchByCategorySubject = PublishSubject<String>()
     
     public let output: Output!
     public var input: Input!
     
     init() {
         output = Output(
-            loading: activityTracker.asObservable(),
-            categories: categoriesSubject.asObservable(),
-            facts: factsSubject.asObservable(),
-            error: errorSubject.asObservable()
+            categories: categoriesSubject.map { SearchViewModel.randomizeResult($0) }.asObservable(),
+            savedSearches: savedSearchesSubject.asObservable(),
+            searchByTerm: searchByTermSubject.asObservable(),
+            searchByCategory: searchByCategorySubject.asObservable()
         )
         
         input = Input(
@@ -44,6 +46,7 @@ class FactsViewModel {
         )
         
         setupBindings()
+        fetchCategories()
     }
     
     private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
@@ -64,38 +67,33 @@ class FactsViewModel {
         }
     }
     
-    private func fetchFactByKeyword(_ query: String) {
+    private func fetchCategories() {
         fetchFromApi(
-            responseType: SearchResponseModel.self,
-            path: ApiPath.search,
-            parameters: ["query": query]
+            responseType: [String].self,
+            path: ApiPath.categories
         ) { [weak self] response in
-            self?.factsSubject.accept(response?.result)
+            self?.categoriesSubject.accept(response)
         }
     }
     
     private func setupBindings() {
         
-        keywordSubject
-            .subscribe { [weak self] keyword in
-                self?.fetchByFilters(keyword: keyword)
-            }
+        keywordSubject.bind(to: searchByTermSubject)
             .disposed(by: disposeBag)
         
-        
-        categorySubject
-            .subscribe { [weak self] category in
-                self?.fetchByFilters(keyword: category)
-            }
+        categorySubject.bind(to: searchByCategorySubject)
             .disposed(by: disposeBag)
-
+        
+        savedSearchesSubject.onNext(["Jesus", "Messi", "Games"])
+        
     }
     
-    private func fetchByFilters(keyword: String? = nil) {
-        guard let keyword = keyword else {
-            return
+    private static func randomizeResult(_ items: [String]?) -> [String] {
+        guard let items = items else {
+            return []
         }
-        fetchFactByKeyword(keyword)
+        let result = [String](items.shuffled().prefix(8))
+        return result
     }
     
 }
