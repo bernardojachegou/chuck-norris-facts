@@ -1,7 +1,7 @@
 import UIKit
 
 protocol TagsCollectionViewDelegate {
-    func didSelect(tag: String?)
+    func didSelect(collectionView: TagsCollectionView, tag: String)
 }
 
 class TagsCollectionView: UIView {
@@ -24,8 +24,9 @@ class TagsCollectionView: UIView {
         }
     }
     
-    init() {
+    init(delegate: TagsCollectionViewDelegate? = nil) {
         super.init(frame: .zero)
+        self.delegate = delegate
         initializeCollectionView()
     }
     
@@ -74,13 +75,14 @@ extension TagsCollectionView: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = tags[indexPath.row]
-        delegate?.didSelect(tag: tag)
+        delegate?.didSelect(collectionView: self, tag: tag)
     }
 }
 
 extension TagsCollectionView: TagCellLayoutDelegate {
     func tagCellLayoutTagSize(layout: TagCellLayout, atIndex index: Int) -> CGSize {
         let tag = tags[index]
-        return CGSize(width: tag.lengthOfBytes(using: .utf8) * 10, height: 30)
+        let cellWidth = tag.lengthOfBytes(using: .utf8) * 12 + 8
+        return CGSize(width: cellWidth, height: 30)
     }
 }

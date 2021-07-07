@@ -2,6 +2,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+protocol SearchViewControllerDelegate {
+    func searchBy(keyword: String)
+    func searchBy(category: String)
+}
+
 class SearchViewController: BaseViewController {
     private var viewModel = SearchViewModel()
     private let collectionViewHeight: CGFloat = 120
@@ -24,8 +29,10 @@ class SearchViewController: BaseViewController {
         return field
     }()
     
-    private var categoriesCollectionView = TagsCollectionView()
-    private var searchesCollectionView = TagsCollectionView()
+    private var categoriesCollectionView: TagsCollectionView!
+    private var searchesCollectionView: TagsCollectionView!
+    
+    public var delegate: SearchViewControllerDelegate?
     
     override func didSetup() {
         super.didSetup()
@@ -35,6 +42,8 @@ class SearchViewController: BaseViewController {
     }
     
     override func getContentView() -> UIView {
+        categoriesCollectionView = TagsCollectionView(delegate: self)
+        searchesCollectionView = TagsCollectionView(delegate: self)
         return renderSearchView()
     }
     
@@ -54,9 +63,13 @@ class SearchViewController: BaseViewController {
     
     private func setupBindings() {
         searchTextField.rx.controlEvent(.editingDidEndOnExit)
-            .subscribe { _ in
-                print("pressed search")
-            }
+            .map({ [weak self] _ in
+                return self?.searchTextField.text ?? ""
+            })
+            .filter({ term in
+                return !term.isEmpty
+            })
+            .bind(to: viewModel.input.keyword)
             .disposed(by: disposeBag)
         
         viewModel.output.categories.asDriver(onErrorDriveWith: .just([]))
@@ -70,19 +83,22 @@ class SearchViewController: BaseViewController {
                 self?.updateCollectionViewSearches(searches)
             }
             .disposed(by: disposeBag)
-
+        
+        viewModel.output.searchByTerm.asDriver(onErrorDriveWith: .empty())
+            .drive { [weak self] term in
+                self?.delegate?.searchBy(keyword: term)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.output.searchByCategory.asDriver(onErrorDriveWith: .empty())
+            .drive { [weak self] category in
+                self?.delegate?.searchBy(category: category)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupLayout() {
-        
-        categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        searchesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         searchesCollectionView.tagStyle = TagsCollectionView.TagStyle(foregroundColor: .darkText, backgroundColor: .lightGray)
-        
-//        NSLayoutConstraint.activate([
-//            categoriesCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
-//            searchesCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight)
-//        ])
     }
     
     private func updateCollectionViewCategories(_ categories: [String]?) {
@@ -98,5 +114,18 @@ class SearchViewController: BaseViewController {
         }
         searchesCollectionView.setTags(searches)
     }
+    
+}
+
+extension SearchViewController: TagsCollectionViewDelegate {
+    func didSelect(collectionView: TagsCollectionView, tag: String) {
+        if collectionView == searchesCollectionView {
+            viewModel.input.keyword.onNext(tag)
+        }
+        if collectionView == categoriesCollectionView {
+            viewModel.input.category.onNext(tag)
+        }
+    }
+    
     
 }

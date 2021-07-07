@@ -21,6 +21,7 @@ class TagCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -42,6 +43,8 @@ class TagCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.layer.cornerRadius = 4
         contentView.clipsToBounds = true
+        
+        contentView.fillParentView(padding: 4)
         titleLabel.fillParentView(padding: 4)
     }
     

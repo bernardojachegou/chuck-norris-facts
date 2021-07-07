@@ -10,21 +10,21 @@ class Coordinator {
     
     public func start() {
         setupNavigationController()
-        goToSearch()
+        goToFacts()
     }
     
     private func goToFacts() {
         let factsViewController = FactsViewController()
         factsViewController.onOpenSearch = { [weak self] in
-            self?.goToSearch()
+            self?.goToSearch(withDelegate: factsViewController)
         }
         navigationController.pushViewController(factsViewController, animated: true)
     }
     
-    private func goToSearch() {
+    private func goToSearch(withDelegate delegate: SearchViewControllerDelegate? = nil) {
         let searchViewController = SearchViewController()
-//        navigationController.present(searchViewController, animated: true)
-        navigationController.pushViewController(searchViewController, animated: true)
+        searchViewController.delegate = delegate
+        navigationController.present(searchViewController, animated: true)
     }
     
 }

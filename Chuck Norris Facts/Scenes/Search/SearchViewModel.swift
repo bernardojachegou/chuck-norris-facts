@@ -8,10 +8,13 @@ class SearchViewModel {
     struct Output {
         let categories: Observable<[String]?>
         let savedSearches: Observable<[String]?>
+        let searchByTerm: Observable<String>
+        let searchByCategory: Observable<String>
     }
     
     struct Input {
-        let keyword: BehaviorSubject<String?>
+        let keyword: PublishSubject<String>
+        let category: PublishSubject<String>
     }
     
     private let httpClient = HttpClient()
@@ -21,7 +24,10 @@ class SearchViewModel {
     private let errorSubject = PublishRelay<ErrorHandleable>()
     
     private let savedSearchesSubject = BehaviorSubject<[String]?>(value: nil)
-    private let keywordSubject = BehaviorSubject<String?>(value: nil)
+    private let keywordSubject = PublishSubject<String>()
+    private let categorySubject = PublishSubject<String>()
+    private let searchByTermSubject = PublishSubject<String>()
+    private let searchByCategorySubject = PublishSubject<String>()
     
     public let output: Output!
     public var input: Input!
@@ -29,14 +35,18 @@ class SearchViewModel {
     init() {
         output = Output(
             categories: categoriesSubject.asObservable(),
-            savedSearches: savedSearchesSubject.asObservable()
+            savedSearches: savedSearchesSubject.asObservable(),
+            searchByTerm: searchByTermSubject.asObservable(),
+            searchByCategory: searchByCategorySubject.asObservable()
         )
         
         input = Input(
-            keyword: keywordSubject
+            keyword: keywordSubject,
+            category: categorySubject
         )
         
         setupBindings()
+        fetchCategories()
     }
     
     private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
@@ -67,10 +77,13 @@ class SearchViewModel {
     }
     
     private func setupBindings() {
-        fetchCategories()
         
-        let searches = ["messi", "pope", "covid vaccine"]
-        savedSearchesSubject.onNext(searches)
+        keywordSubject.bind(to: searchByTermSubject)
+            .disposed(by: disposeBag)
+        
+        categorySubject.bind(to: searchByCategorySubject)
+            .disposed(by: disposeBag)
+        
     }
     
 }

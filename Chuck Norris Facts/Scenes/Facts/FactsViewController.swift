@@ -68,10 +68,6 @@ class FactsViewController: BaseViewController {
                 self?.reloadContentView()
             })
             .disposed(by: disposeBag)
-
-        
-        viewModel.input.keyword.onNext("messi")
-        viewModel.input.category.onNext("sport")
     }
     
     private func renderFactCards() -> UIView {
@@ -105,5 +101,15 @@ extension FactsViewController {
             return
         }
         UIApplication.shared.open(shareableURL, options: [:], completionHandler: nil)
+    }
+}
+
+extension FactsViewController: SearchViewControllerDelegate {
+    func searchBy(keyword: String) {
+        print("keyword: \(keyword)")
+    }
+    
+    func searchBy(category: String) {
+        print("category: \(category)")
     }
 }
