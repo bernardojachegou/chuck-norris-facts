@@ -34,7 +34,7 @@ class SearchViewModel {
     
     init() {
         output = Output(
-            categories: categoriesSubject.asObservable(),
+            categories: categoriesSubject.map { SearchViewModel.randomizeResult($0) }.asObservable(),
             savedSearches: savedSearchesSubject.asObservable(),
             searchByTerm: searchByTermSubject.asObservable(),
             searchByCategory: searchByCategorySubject.asObservable()
@@ -86,6 +86,14 @@ class SearchViewModel {
         
         savedSearchesSubject.onNext(["Jesus", "Messi", "Games"])
         
+    }
+    
+    private static func randomizeResult(_ items: [String]?) -> [String] {
+        guard let items = items else {
+            return []
+        }
+        let result = [String](items.shuffled().prefix(8))
+        return result
     }
     
 }

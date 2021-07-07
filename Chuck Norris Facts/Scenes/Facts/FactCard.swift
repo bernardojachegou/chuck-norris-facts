@@ -1,7 +1,7 @@
 import UIKit
 
 class FactCard: UIView {
-    
+    private let factSizeForSmallerFont = 80
     
     private var onShareButtonTap: ((String) -> ())?
     
@@ -126,7 +126,7 @@ class FactCard: UIView {
     }
     
     private func getFontSizeForContent() -> CGFloat {
-        return fact.value.lengthOfBytes(using: .utf8) > 80 ? 12 : 16
+        return fact.value.lengthOfBytes(using: .utf8) > factSizeForSmallerFont ? 12 : 16
     }
     
     private func setupTitle() {

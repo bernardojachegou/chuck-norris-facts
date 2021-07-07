@@ -64,26 +64,6 @@ class FactsViewModel {
         }
     }
     
-    func fetchFactByCategory(_ category: String? = nil) {
-        
-        var parameters: [String: String]?
-        if let category = category {
-            parameters = ["category": category]
-        }
-        
-        fetchFromApi(
-            responseType: FactModel.self,
-            path: ApiPath.fact,
-            parameters: parameters
-        ) { [weak self] response in
-            if let response = response {
-                self?.factsSubject.accept([response])
-            } else {
-                self?.factsSubject.accept(nil)
-            }
-        }
-    }
-    
     private func fetchFactByKeyword(_ query: String) {
         fetchFromApi(
             responseType: SearchResponseModel.self,
@@ -105,18 +85,17 @@ class FactsViewModel {
         
         categorySubject
             .subscribe { [weak self] category in
-                self?.fetchByFilters(category: category)
+                self?.fetchByFilters(keyword: category)
             }
             .disposed(by: disposeBag)
 
     }
     
-    private func fetchByFilters(keyword: String? = nil, category: String? = nil) {
-        if let keyword = keyword {
-            fetchFactByKeyword(keyword)
-        } else if let category = category {
-            fetchFactByCategory(category)
+    private func fetchByFilters(keyword: String? = nil) {
+        guard let keyword = keyword else {
+            return
         }
+        fetchFactByKeyword(keyword)
     }
     
 }
