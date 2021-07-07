@@ -94,27 +94,21 @@ class FactsViewModel {
         }
     }
     
-    private func fetchCategories() {
-        fetchFromApi(
-            responseType: [String].self,
-            path: ApiPath.categories
-        ) { [weak self] response in
-            self?.categoriesSubject.accept(response)
-        }
-    }
-    
     private func setupBindings() {
         
-        Observable
-            .zip(input.keyword, input.category)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (keyword, category) in
-                self?.fetchByFilters(keyword: keyword, category: category)
-            })
+        keywordSubject
+            .subscribe { [weak self] keyword in
+                self?.fetchByFilters(keyword: keyword)
+            }
             .disposed(by: disposeBag)
         
-        fetchCategories()
-            
+        
+        categorySubject
+            .subscribe { [weak self] category in
+                self?.fetchByFilters(category: category)
+            }
+            .disposed(by: disposeBag)
+
     }
     
     private func fetchByFilters(keyword: String? = nil, category: String? = nil) {

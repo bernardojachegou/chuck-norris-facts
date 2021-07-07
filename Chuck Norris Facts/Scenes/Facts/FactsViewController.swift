@@ -19,6 +19,7 @@ class FactsViewController: BaseViewController {
     }()
     
     public var onOpenSearch: (() -> ())?
+    public var onCloseSearch: (() -> ())?
     
     override func didSetup() {
         super.didSetup()
@@ -106,10 +107,12 @@ extension FactsViewController {
 
 extension FactsViewController: SearchViewControllerDelegate {
     func searchBy(keyword: String) {
-        print("keyword: \(keyword)")
+        viewModel.input.keyword.onNext(keyword)
+        onCloseSearch?()
     }
     
     func searchBy(category: String) {
-        print("category: \(category)")
+        viewModel.input.category.onNext(category)
+        onCloseSearch?()
     }
 }

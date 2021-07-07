@@ -18,6 +18,9 @@ class Coordinator {
         factsViewController.onOpenSearch = { [weak self] in
             self?.goToSearch(withDelegate: factsViewController)
         }
+        factsViewController.onCloseSearch = { [weak self] in
+            self?.navigationController.dismiss(animated: true, completion: nil)
+        }
         navigationController.pushViewController(factsViewController, animated: true)
     }
     
