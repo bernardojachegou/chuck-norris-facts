@@ -101,8 +101,8 @@ class FactCard: UIView {
         stack.removeAllArrangedSubviews()
         stack.fillParentView(padding: 8)
         stack.addArrangedSubview(actionHolder)
-        stack.addArrangedSubview(iconImageView)
         stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(iconImageView)
         
         setupTitle()
         

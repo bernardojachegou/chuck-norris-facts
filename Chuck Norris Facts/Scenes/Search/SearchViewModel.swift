@@ -84,6 +84,8 @@ class SearchViewModel {
         categorySubject.bind(to: searchByCategorySubject)
             .disposed(by: disposeBag)
         
+        savedSearchesSubject.onNext(["Jesus", "Messi", "Games"])
+        
     }
     
 }
