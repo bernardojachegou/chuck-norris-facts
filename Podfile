@@ -7,7 +7,6 @@ target 'CN Facts' do
   # Pods for CN Facts
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
-  pod 'RealmSwift', '=10.1.4'
   pod 'PKHUD', '~> 5.0'
   pod 'Toaster', '2.3.0'
 
