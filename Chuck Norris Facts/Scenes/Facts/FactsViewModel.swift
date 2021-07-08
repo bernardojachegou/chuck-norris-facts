@@ -17,7 +17,7 @@ class FactsViewModel {
         let category: BehaviorSubject<String?>
     }
     
-    private let httpClient = HttpClient()
+    private let provider: FactsProvider!
     private let disposeBag = DisposeBag()
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
@@ -30,7 +30,9 @@ class FactsViewModel {
     public let output: Output!
     public var input: Input!
     
-    init() {
+    init(provider: FactsProvider? = nil) {
+        self.provider = provider ?? FactsProvider()
+        
         output = Output(
             loading: activityTracker.asObservable(),
             categories: categoriesSubject.asObservable(),
@@ -47,40 +49,18 @@ class FactsViewModel {
         fetchCategories()
     }
     
-    private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
-        activityTracker.accept(true)
-        httpClient.doGET(
-            host: .general,
-            toPath: path,
-            withHeaders: nil,
-            withParameters: parameters,
-            responseType: T.self
-        ) { [weak self] (error, response) in
-            self?.activityTracker.accept(false)
-            if let error = error {
-                self?.errorSubject.accept(error)
-                return
-            }
-            completion(response)
-        }
-    }
-    
     private func fetchFactByKeyword(_ query: String) {
-        fetchFromApi(
-            responseType: SearchResponseModel.self,
-            path: ApiPath.search,
-            parameters: ["query": query]
-        ) { [weak self] response in
+        activityTracker.accept(true)
+        provider.searchForFacts(query: query) { [weak self] (error, response) in
             self?.factsSubject.accept(response?.result)
+            self?.activityTracker.accept(false)
         }
     }
     
     private func fetchCategories() {
-        fetchFromApi(
-            responseType: [String].self,
-            path: ApiPath.categories
-        ) { [weak self] response in
-            self?.saveCategoriesLocally(response ?? [])
+        activityTracker.accept(true)
+        provider.fetchCategories() { [weak self] (error, response) in
+            self?.activityTracker.accept(false)
         }
     }
     
@@ -105,11 +85,6 @@ class FactsViewModel {
             return
         }
         fetchFactByKeyword(keyword)
-    }
-    
-    private func saveCategoriesLocally(_ categories: [String]) {
-        UserDefaults.standard.setValue(categories, forKey: "OFFLINE_CATEGORIES")
-        UserDefaults.standard.synchronize()
     }
     
 }

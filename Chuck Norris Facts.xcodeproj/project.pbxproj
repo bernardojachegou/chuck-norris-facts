@@ -27,6 +27,7 @@
 		FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90842695F0EC003F6716 /* TagCell.swift */; };
 		FA5C90872695F8A1003F6716 /* AutoHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */; };
 		FA5C908926964F7C003F6716 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C908826964F7C003F6716 /* String.swift */; };
+		FAA064E82697927F0091C34A /* FactsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064E72697927F0091C34A /* FactsProvider.swift */; };
 		FACE13C5266DAF9B00D66AA3 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13C4266DAF9B00D66AA3 /* FactsViewModel.swift */; };
 		FACE13C7266DAFBD00D66AA3 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACE13C6266DAFBD00D66AA3 /* Networking.framework */; };
 		FACE13C8266DAFBD00D66AA3 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FACE13C6266DAFBD00D66AA3 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -98,6 +99,7 @@
 		FA5C90842695F0EC003F6716 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionView.swift; sourceTree = "<group>"; };
 		FA5C908826964F7C003F6716 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		FAA064E72697927F0091C34A /* FactsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsProvider.swift; sourceTree = "<group>"; };
 		FACE13C4266DAF9B00D66AA3 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
 		FACE13C6266DAFBD00D66AA3 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACE13CB266DAFE900D66AA3 /* FactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		FA1F07AB266150900039FA82 /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
+				FAA064E6269792610091C34A /* Provider */,
 				FACE13D7266DD50200D66AA3 /* Utils */,
 				FACE13CF266DB4F400D66AA3 /* Base */,
 				FACE13CA266DAFD600D66AA3 /* Models */,
@@ -237,6 +240,14 @@
 				FA5C90842695F0EC003F6716 /* TagCell.swift */,
 			);
 			path = "Tag Collection";
+			sourceTree = "<group>";
+		};
+		FAA064E6269792610091C34A /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				FAA064E72697927F0091C34A /* FactsProvider.swift */,
+			);
+			path = Provider;
 			sourceTree = "<group>";
 		};
 		FACE13C0266DAF2000D66AA3 /* Scenes */ = {
@@ -500,6 +511,7 @@
 				FA5C90872695F8A1003F6716 /* AutoHeightCollectionView.swift in Sources */,
 				FA1C1E6B2693AEC700DA19B9 /* SearchViewController.swift in Sources */,
 				FA1C1E5F2693A04600DA19B9 /* UIColor.swift in Sources */,
+				FAA064E82697927F0091C34A /* FactsProvider.swift in Sources */,
 				FA1C1E652693ADC600DA19B9 /* TagCellLayout.swift in Sources */,
 				FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */,
 				FACE13D4266DC98700D66AA3 /* ActivityIndicator.swift in Sources */,

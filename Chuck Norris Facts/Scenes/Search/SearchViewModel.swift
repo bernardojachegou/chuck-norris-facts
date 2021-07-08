@@ -17,7 +17,7 @@ class SearchViewModel {
         let category: PublishSubject<String>
     }
     
-    private let httpClient = HttpClient()
+    private let provider: FactsProvider!
     private let disposeBag = DisposeBag()
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
@@ -32,7 +32,9 @@ class SearchViewModel {
     public let output: Output!
     public var input: Input!
     
-    init() {
+    init(provider: FactsProvider? = nil) {
+        self.provider = provider ?? FactsProvider()
+        
         output = Output(
             categories: categoriesSubject.map { SearchViewModel.randomizeResult($0) }.asObservable(),
             savedSearches: savedSearchesSubject.asObservable(),
@@ -49,14 +51,15 @@ class SearchViewModel {
     }
     
     public func fetchCategories() {
-        if let categories = UserDefaults.standard.array(forKey: "OFFLINE_CATEGORIES") as? [String] {
-            categoriesSubject.accept(categories)
+        
+        provider.fetchCategories { [weak self] (error, response) in
+            self?.categoriesSubject.accept(response)
         }
     }
     
     public func fetchSavedSearches() {
-        if let searches = loadSearchesLocally() {
-            savedSearchesSubject.onNext(searches)
+        provider.fetchSearches { [weak self] (error, response) in
+            self?.savedSearchesSubject.onNext(response)
         }
     }
     
@@ -84,17 +87,8 @@ class SearchViewModel {
         return result
     }
     
-    private func loadSearchesLocally() -> [String]? {
-        return UserDefaults.standard.array(forKey: "OFFLINE_SEARCHES") as? [String]
-    }
-    
     private func saveSearchLocally(_ keyword: String) {
-        let searches = loadSearchesLocally() ?? []
-        let newSearches = [keyword] + searches.filter({ item in
-            return item.normalized() != keyword.normalized()
-        })
-        UserDefaults.standard.setValue(newSearches, forKey: "OFFLINE_SEARCHES")
-        UserDefaults.standard.synchronize()
+        provider.saveSearch(keyword: keyword)
     }
     
 }
