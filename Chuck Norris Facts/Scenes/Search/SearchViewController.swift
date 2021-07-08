@@ -36,9 +36,13 @@ class SearchViewController: BaseViewController {
     
     override func didSetup() {
         super.didSetup()
+        
         setupNavBar()
         setupBindings()
         setupLayout()
+        
+        viewModel.fetchCategories()
+        viewModel.fetchSavedSearches()
     }
     
     override func getContentView() -> UIView {
@@ -52,11 +56,11 @@ class SearchViewController: BaseViewController {
     }
     
     private func renderSearchView() -> UIView {
-        stackView.addArrangedSubview(sectionTitle("Search facts"))
+        stackView.addArrangedSubview(sectionTitle("Search facts", textColor: .lightGray))
         stackView.addArrangedSubview(searchTextField)
-        stackView.addArrangedSubview(sectionTitle("Categories"))
+        stackView.addArrangedSubview(sectionTitle("Categories", textColor: .lightGray))
         stackView.addArrangedSubview(categoriesCollectionView)
-        stackView.addArrangedSubview(sectionTitle("Saved searches"))
+        stackView.addArrangedSubview(sectionTitle("Saved searches", textColor: .lightGray))
         stackView.addArrangedSubview(searchesCollectionView)
         return stackView
     }
@@ -98,7 +102,8 @@ class SearchViewController: BaseViewController {
     }
     
     private func setupLayout() {
-        searchesCollectionView.tagStyle = TagsCollectionView.TagStyle(foregroundColor: .darkText, backgroundColor: .lightGray)
+        view.backgroundColor = .darkText
+        searchesCollectionView.tagStyle = TagsCollectionView.TagStyle(foregroundColor: .white, backgroundColor: .darkGray)
     }
     
     private func updateCollectionViewCategories(_ categories: [String]?) {
