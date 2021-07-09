@@ -1,5 +1,4 @@
 import Foundation
-import Networking
 import RxCocoa
 import RxSwift
 
@@ -17,9 +16,9 @@ class FactsViewModel {
         let category: BehaviorSubject<String?>
     }
     
-    private let httpClient = HttpClient()
+    private let provider: FactsProvider!
     private let disposeBag = DisposeBag()
-    private let activityTracker = PublishRelay<Bool>()
+    private let activityTracker = ActivityIndicator()
     private let categoriesSubject = PublishRelay<[String]?>()
     private let factsSubject = PublishRelay<[FactModel]?>()
     private let errorSubject = PublishRelay<GenericError>()
@@ -30,7 +29,9 @@ class FactsViewModel {
     public let output: Output!
     public var input: Input!
     
-    init() {
+    init(provider: FactsProvider? = nil) {
+        self.provider = provider ?? FactsProvider()
+        
         output = Output(
             loading: activityTracker.asObservable(),
             categories: categoriesSubject.asObservable(),
@@ -47,41 +48,29 @@ class FactsViewModel {
         fetchCategories()
     }
     
-    private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (T?) -> ()) {
-        activityTracker.accept(true)
-        httpClient.doGET(
-            host: .general,
-            toPath: path,
-            withHeaders: nil,
-            withParameters: parameters,
-            responseType: T.self
-        ) { [weak self] (error, response) in
-            self?.activityTracker.accept(false)
-            if let error = error {
-                self?.errorSubject.accept(error)
-                return
-            }
-            completion(response)
-        }
-    }
-    
     private func fetchFactByKeyword(_ query: String) {
-        fetchFromApi(
-            responseType: SearchResponseModel.self,
-            path: ApiPath.search,
-            parameters: ["query": query]
-        ) { [weak self] response in
-            self?.factsSubject.accept(response?.result)
-        }
+        provider.searchForFacts(query: query)
+            .trackActivity(activityTracker)
+            .map { $0.result }
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .bind(to: factsSubject)
+            .disposed(by: disposeBag)
     }
     
     private func fetchCategories() {
-        fetchFromApi(
-            responseType: [String].self,
-            path: ApiPath.categories
-        ) { [weak self] response in
-            self?.saveCategoriesLocally(response ?? [])
-        }
+        provider.fetchCategories()
+            .trackActivity(activityTracker)
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .subscribe(onNext: { [weak self] categories in
+                self?.provider.saveCategories(categories: categories)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
@@ -105,11 +94,6 @@ class FactsViewModel {
             return
         }
         fetchFactByKeyword(keyword)
-    }
-    
-    private func saveCategoriesLocally(_ categories: [String]) {
-        UserDefaults.standard.setValue(categories, forKey: "OFFLINE_CATEGORIES")
-        UserDefaults.standard.synchronize()
     }
     
 }

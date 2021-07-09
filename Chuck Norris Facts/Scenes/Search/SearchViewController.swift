@@ -99,6 +99,13 @@ class SearchViewController: BaseViewController {
                 self?.delegate?.searchBy(category: category)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.output.error
+            .asDriver(onErrorDriveWith: .empty())
+            .drive { [weak self] error in
+                self?.displayError(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupLayout() {
@@ -119,7 +126,6 @@ class SearchViewController: BaseViewController {
         }
         searchesCollectionView.setTags(searches)
     }
-    
 }
 
 extension SearchViewController: TagsCollectionViewDelegate {
@@ -131,6 +137,4 @@ extension SearchViewController: TagsCollectionViewDelegate {
             viewModel.input.category.onNext(tag)
         }
     }
-    
-    
 }

@@ -1,5 +1,4 @@
 import Foundation
-import Networking
 import RxCocoa
 import RxSwift
 
@@ -10,6 +9,7 @@ class SearchViewModel {
         let savedSearches: Observable<[String]?>
         let searchByTerm: Observable<String>
         let searchByCategory: Observable<String>
+        let error: Observable<GenericError>
     }
     
     struct Input {
@@ -17,11 +17,11 @@ class SearchViewModel {
         let category: PublishSubject<String>
     }
     
-    private let httpClient = HttpClient()
+    private let provider: FactsProvider!
     private let disposeBag = DisposeBag()
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
-    private let errorSubject = PublishRelay<ErrorHandleable>()
+    private let errorSubject = PublishRelay<GenericError>()
     
     private let savedSearchesSubject = BehaviorSubject<[String]?>(value: nil)
     private let keywordSubject = PublishSubject<String>()
@@ -32,12 +32,15 @@ class SearchViewModel {
     public let output: Output!
     public var input: Input!
     
-    init() {
+    init(provider: FactsProvider? = nil) {
+        self.provider = provider ?? FactsProvider()
+        
         output = Output(
             categories: categoriesSubject.map { SearchViewModel.randomizeResult($0) }.asObservable(),
             savedSearches: savedSearchesSubject.asObservable(),
             searchByTerm: searchByTermSubject.asObservable(),
-            searchByCategory: searchByCategorySubject.asObservable()
+            searchByCategory: searchByCategorySubject.asObservable(),
+            error: errorSubject.asObservable()
         )
         
         input = Input(
@@ -49,15 +52,19 @@ class SearchViewModel {
     }
     
     public func fetchCategories() {
-        if let categories = UserDefaults.standard.array(forKey: "OFFLINE_CATEGORIES") as? [String] {
-            categoriesSubject.accept(categories)
-        }
+        provider.fetchCategories()
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .bind(to: categoriesSubject)
+            .disposed(by: disposeBag)
     }
     
     public func fetchSavedSearches() {
-        if let searches = loadSearchesLocally() {
-            savedSearchesSubject.onNext(searches)
-        }
+        provider.fetchSearches()
+            .bind(to: savedSearchesSubject)
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
@@ -84,17 +91,8 @@ class SearchViewModel {
         return result
     }
     
-    private func loadSearchesLocally() -> [String]? {
-        return UserDefaults.standard.array(forKey: "OFFLINE_SEARCHES") as? [String]
-    }
-    
     private func saveSearchLocally(_ keyword: String) {
-        let searches = loadSearchesLocally() ?? []
-        let newSearches = [keyword] + searches.filter({ item in
-            return item.normalized() != keyword.normalized()
-        })
-        UserDefaults.standard.setValue(newSearches, forKey: "OFFLINE_SEARCHES")
-        UserDefaults.standard.synchronize()
+        provider.saveSearch(keyword: keyword)
     }
     
 }

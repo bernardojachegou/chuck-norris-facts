@@ -1,6 +1,6 @@
 import Foundation
 
-struct FactModel: Decodable {
+struct FactModel: Codable {
     
     let id: String
     let url: String
@@ -16,7 +16,7 @@ struct FactModel: Decodable {
     
 }
 
-struct SearchResponseModel: Decodable {
+struct SearchResponseModel: Codable {
     let result: [FactModel]
     
     enum CodingKeys: String, CodingKey {

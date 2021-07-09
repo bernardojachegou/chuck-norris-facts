@@ -27,9 +27,13 @@
 		FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90842695F0EC003F6716 /* TagCell.swift */; };
 		FA5C90872695F8A1003F6716 /* AutoHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */; };
 		FA5C908926964F7C003F6716 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C908826964F7C003F6716 /* String.swift */; };
+		FAA064E82697927F0091C34A /* FactsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064E72697927F0091C34A /* FactsProvider.swift */; };
+		FAA064EB2697A7ED0091C34A /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064EA2697A7ED0091C34A /* ApiRequest.swift */; };
+		FAA064ED2697A8EA0091C34A /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064EC2697A8EA0091C34A /* SearchRequest.swift */; };
+		FAA064EF2697A9220091C34A /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064EE2697A9220091C34A /* ApiClient.swift */; };
+		FAA064F12697A9C60091C34A /* CategoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064F02697A9C60091C34A /* CategoriesRequest.swift */; };
+		FAA064F42697B1AB0091C34A /* GenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA064F32697B1AB0091C34A /* GenericError.swift */; };
 		FACE13C5266DAF9B00D66AA3 /* FactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13C4266DAF9B00D66AA3 /* FactsViewModel.swift */; };
-		FACE13C7266DAFBD00D66AA3 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACE13C6266DAFBD00D66AA3 /* Networking.framework */; };
-		FACE13C8266DAFBD00D66AA3 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FACE13C6266DAFBD00D66AA3 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FACE13CC266DAFE900D66AA3 /* FactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13CB266DAFE900D66AA3 /* FactsViewController.swift */; };
 		FACE13CE266DB06900D66AA3 /* FactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13CD266DB06900D66AA3 /* FactModel.swift */; };
 		FACE13D2266DB53000D66AA3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13D1266DB53000D66AA3 /* Coordinator.swift */; };
@@ -55,20 +59,6 @@
 			remoteInfo = "Chuck Norris Facts";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		FACE13C9266DAFBD00D66AA3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FACE13C8266DAFBD00D66AA3 /* Networking.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2ADD679A3DDA45465227BBC4 /* Pods_CN_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CN_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +88,12 @@
 		FA5C90842695F0EC003F6716 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionView.swift; sourceTree = "<group>"; };
 		FA5C908826964F7C003F6716 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		FAA064E72697927F0091C34A /* FactsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsProvider.swift; sourceTree = "<group>"; };
+		FAA064EA2697A7ED0091C34A /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
+		FAA064EC2697A8EA0091C34A /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		FAA064EE2697A9220091C34A /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		FAA064F02697A9C60091C34A /* CategoriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesRequest.swift; sourceTree = "<group>"; };
+		FAA064F32697B1AB0091C34A /* GenericError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericError.swift; sourceTree = "<group>"; };
 		FACE13C4266DAF9B00D66AA3 /* FactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModel.swift; sourceTree = "<group>"; };
 		FACE13C6266DAFBD00D66AA3 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACE13CB266DAFE900D66AA3 /* FactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +111,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FACE13C7266DAFBD00D66AA3 /* Networking.framework in Frameworks */,
 				5F512F1AB663E1E2E1E70F2F /* Pods_CN_Facts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,9 +197,10 @@
 		FA1F07AB266150900039FA82 /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
+				FAA064E92697A7DB0091C34A /* Networking */,
+				FAA064E6269792610091C34A /* Provider */,
 				FACE13D7266DD50200D66AA3 /* Utils */,
 				FACE13CF266DB4F400D66AA3 /* Base */,
-				FACE13CA266DAFD600D66AA3 /* Models */,
 				FACE13C1266DAF3200D66AA3 /* Supporting */,
 				FACE13C0266DAF2000D66AA3 /* Scenes */,
 				FA1F07B8266150930039FA82 /* Assets.xcassets */,
@@ -237,6 +233,35 @@
 				FA5C90842695F0EC003F6716 /* TagCell.swift */,
 			);
 			path = "Tag Collection";
+			sourceTree = "<group>";
+		};
+		FAA064E6269792610091C34A /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				FAA064E72697927F0091C34A /* FactsProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		FAA064E92697A7DB0091C34A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FAA064EE2697A9220091C34A /* ApiClient.swift */,
+				FAA064F32697B1AB0091C34A /* GenericError.swift */,
+				FACE13CA266DAFD600D66AA3 /* Models */,
+				FAA064F22697A9D00091C34A /* Requests */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		FAA064F22697A9D00091C34A /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				FAA064EA2697A7ED0091C34A /* ApiRequest.swift */,
+				FAA064EC2697A8EA0091C34A /* SearchRequest.swift */,
+				FAA064F02697A9C60091C34A /* CategoriesRequest.swift */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		FACE13C0266DAF2000D66AA3 /* Scenes */ = {
@@ -320,7 +345,6 @@
 				FA1F07A6266150900039FA82 /* Frameworks */,
 				FA1F07A7266150900039FA82 /* Resources */,
 				4005275BDDDC7A731A13C5BE /* [CP] Embed Pods Frameworks */,
-				FACE13C9266DAFBD00D66AA3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -487,19 +511,25 @@
 				FA5C908926964F7C003F6716 /* String.swift in Sources */,
 				FA1F07B7266150900039FA82 /* Chuck_Norris_Facts.xcdatamodeld in Sources */,
 				FA1C1E662693ADC600DA19B9 /* LayoutAlignment.swift in Sources */,
+				FAA064F12697A9C60091C34A /* CategoriesRequest.swift in Sources */,
 				FA1C1E6D2693B2F100DA19B9 /* SearchViewModel.swift in Sources */,
 				FA1C1E682693ADC600DA19B9 /* TagCellLayoutDelegate.swift in Sources */,
 				FA5C90832695E43E003F6716 /* TagsCollectionView.swift in Sources */,
 				FACE13CE266DB06900D66AA3 /* FactModel.swift in Sources */,
 				FA1C1E672693ADC600DA19B9 /* LayoutInfo.swift in Sources */,
 				FACE13DB266DD55A00D66AA3 /* UIView.swift in Sources */,
+				FAA064EF2697A9220091C34A /* ApiClient.swift in Sources */,
 				FACE13CC266DAFE900D66AA3 /* FactsViewController.swift in Sources */,
 				FACE13C5266DAF9B00D66AA3 /* FactsViewModel.swift in Sources */,
 				FA1F07AD266150900039FA82 /* AppDelegate.swift in Sources */,
 				FACE13D6266DD43E00D66AA3 /* FactCard.swift in Sources */,
 				FA5C90872695F8A1003F6716 /* AutoHeightCollectionView.swift in Sources */,
 				FA1C1E6B2693AEC700DA19B9 /* SearchViewController.swift in Sources */,
+				FAA064ED2697A8EA0091C34A /* SearchRequest.swift in Sources */,
 				FA1C1E5F2693A04600DA19B9 /* UIColor.swift in Sources */,
+				FAA064EB2697A7ED0091C34A /* ApiRequest.swift in Sources */,
+				FAA064F42697B1AB0091C34A /* GenericError.swift in Sources */,
+				FAA064E82697927F0091C34A /* FactsProvider.swift in Sources */,
 				FA1C1E652693ADC600DA19B9 /* TagCellLayout.swift in Sources */,
 				FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */,
 				FACE13D4266DC98700D66AA3 /* ActivityIndicator.swift in Sources */,
