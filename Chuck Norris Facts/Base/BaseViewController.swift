@@ -1,7 +1,6 @@
 import UIKit
 import Toaster
 import RxSwift
-import Networking
 
 class BaseViewController: UIViewController {
 
@@ -95,7 +94,7 @@ class BaseViewController: UIViewController {
     }
     
     public func displayError(_ error: GenericError) {
-        Toast(text: error.message(), duration: 3).show()
+        Toast(text: error.getMessage(), duration: 3).show()
     }
     
     public func didSetup() {}

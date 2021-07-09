@@ -1,5 +1,5 @@
 import Foundation
-import Networking
+import RxSwift
 
 class FactsProvider {
     
@@ -7,27 +7,25 @@ class FactsProvider {
         case OfflineCategories
         case OfflineSearches
     }
+
+    private let apiClient: ApiClient!
     
-    private let httpClient: HttpClient!
-    
-    init(httpClient: HttpClient? = nil) {
-        self.httpClient = httpClient ?? HttpClient()
+    init(apiClient: ApiClient? = nil) {
+        self.apiClient = apiClient ?? ApiClient()
     }
     
-    public func fetchCategories(_ completion: @escaping (GenericError?, [String]?) -> ()) {
-        fetchFromCache(key: .OfflineCategories, ofType: [String].self) { [weak self] (error, response) in
-            if error != nil {
-                self?.fetchFromApi(responseType: [String].self, path: ApiPath.categories, completion)
-            } else {
-                completion(error, response)
-            }
+    public func fetchCategories() -> Observable<[String]> {
+        let cacheKey = CacheKey.OfflineCategories.rawValue
+        if let cachedCategories = getValueFromCache(key: cacheKey, ofType: [String].self) {
+            return Observable.of(cachedCategories)
         }
+        return apiClient
+            .send(apiRequest: CategoriesRequest())
+            .retry(2)
     }
     
-    public func fetchSearches(_ completion: @escaping (GenericError?, [String]?) -> ()) {
-        fetchFromCache(key: .OfflineSearches, ofType: [String].self) { (error, response) in
-            completion(error, response)
-        }
+    public func fetchSearches() -> Observable<[String]?> {
+        return Observable.of(getValueFromCache(key: CacheKey.OfflineSearches.rawValue, ofType: [String].self))
     }
     
     public func saveSearch(keyword: String) {
@@ -39,32 +37,16 @@ class FactsProvider {
         saveValueOnCache(key: cacheKey, value: newSearches)
     }
     
-    public func searchForFacts(query: String, _ completion: @escaping (GenericError?, SearchResponseModel?) -> ()) {
-        fetchFromApi(
-            responseType: SearchResponseModel.self,
-            path: ApiPath.search,
-            parameters: ["query": query]
-        ) { (error, response) in
-            completion(error, response)
-        }
+    public func saveCategories(categories: [String]) {
+        saveValueOnCache(key: CacheKey.OfflineCategories.rawValue, value: categories)
     }
     
+    public func searchForFacts(query: String) -> Observable<SearchResponseModel> {
+        return apiClient.send(apiRequest: SearchRequest(query: query)).retry(2)
+    }
 }
 
-
 extension FactsProvider {
-    private func fetchFromApi<T: Decodable>(responseType: T.Type, path: Path, parameters: [String: String]? = nil, _ completion: @escaping (GenericError?, T?) -> ()) {
-        httpClient.doGET(
-            host: .general,
-            toPath: path,
-            withHeaders: nil,
-            withParameters: parameters,
-            responseType: T.self
-        ) { (error, response) in
-            completion(nil, response)
-        }
-    }
-    
     private func getValueFromCache<T>(key: String, ofType type: T.Type) -> T? {
         UserDefaults.standard.synchronize()
         return UserDefaults.standard.value(forKey: key) as? T
@@ -79,7 +61,7 @@ extension FactsProvider {
         if let value = getValueFromCache(key: key.rawValue, ofType: type) {
             completion(nil, value)
         } else {
-            completion(GenericError(title: "Not in cache", message: "Value requested not cached"), nil)
+            completion(GenericError(title: "Not in cache", message: "Value requested not cached", statusCode: 404), nil)
         }
     }
 }

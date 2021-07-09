@@ -1,5 +1,4 @@
 import Foundation
-import Networking
 import RxCocoa
 import RxSwift
 
@@ -10,6 +9,7 @@ class SearchViewModel {
         let savedSearches: Observable<[String]?>
         let searchByTerm: Observable<String>
         let searchByCategory: Observable<String>
+        let error: Observable<GenericError>
     }
     
     struct Input {
@@ -21,7 +21,7 @@ class SearchViewModel {
     private let disposeBag = DisposeBag()
     private let activityTracker = PublishRelay<Bool>()
     private let categoriesSubject = PublishRelay<[String]?>()
-    private let errorSubject = PublishRelay<ErrorHandleable>()
+    private let errorSubject = PublishRelay<GenericError>()
     
     private let savedSearchesSubject = BehaviorSubject<[String]?>(value: nil)
     private let keywordSubject = PublishSubject<String>()
@@ -39,7 +39,8 @@ class SearchViewModel {
             categories: categoriesSubject.map { SearchViewModel.randomizeResult($0) }.asObservable(),
             savedSearches: savedSearchesSubject.asObservable(),
             searchByTerm: searchByTermSubject.asObservable(),
-            searchByCategory: searchByCategorySubject.asObservable()
+            searchByCategory: searchByCategorySubject.asObservable(),
+            error: errorSubject.asObservable()
         )
         
         input = Input(
@@ -51,16 +52,19 @@ class SearchViewModel {
     }
     
     public func fetchCategories() {
-        
-        provider.fetchCategories { [weak self] (error, response) in
-            self?.categoriesSubject.accept(response)
-        }
+        provider.fetchCategories()
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .bind(to: categoriesSubject)
+            .disposed(by: disposeBag)
     }
     
     public func fetchSavedSearches() {
-        provider.fetchSearches { [weak self] (error, response) in
-            self?.savedSearchesSubject.onNext(response)
-        }
+        provider.fetchSearches()
+            .bind(to: savedSearchesSubject)
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {

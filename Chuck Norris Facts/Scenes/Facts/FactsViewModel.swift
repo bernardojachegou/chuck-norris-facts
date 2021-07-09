@@ -1,5 +1,4 @@
 import Foundation
-import Networking
 import RxCocoa
 import RxSwift
 
@@ -19,7 +18,7 @@ class FactsViewModel {
     
     private let provider: FactsProvider!
     private let disposeBag = DisposeBag()
-    private let activityTracker = PublishRelay<Bool>()
+    private let activityTracker = ActivityIndicator()
     private let categoriesSubject = PublishRelay<[String]?>()
     private let factsSubject = PublishRelay<[FactModel]?>()
     private let errorSubject = PublishRelay<GenericError>()
@@ -50,18 +49,28 @@ class FactsViewModel {
     }
     
     private func fetchFactByKeyword(_ query: String) {
-        activityTracker.accept(true)
-        provider.searchForFacts(query: query) { [weak self] (error, response) in
-            self?.factsSubject.accept(response?.result)
-            self?.activityTracker.accept(false)
-        }
+        provider.searchForFacts(query: query)
+            .trackActivity(activityTracker)
+            .map { $0.result }
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .bind(to: factsSubject)
+            .disposed(by: disposeBag)
     }
     
     private func fetchCategories() {
-        activityTracker.accept(true)
-        provider.fetchCategories() { [weak self] (error, response) in
-            self?.activityTracker.accept(false)
-        }
+        provider.fetchCategories()
+            .trackActivity(activityTracker)
+            .catch({ [weak self] error in
+                self?.errorSubject.accept(GenericError.generalError)
+                return .empty()
+            })
+            .subscribe(onNext: { [weak self] categories in
+                self?.provider.saveCategories(categories: categories)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {

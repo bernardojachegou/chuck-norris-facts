@@ -82,7 +82,9 @@ extension TagsCollectionView: UICollectionViewDataSource, UICollectionViewDelega
 extension TagsCollectionView: TagCellLayoutDelegate {
     func tagCellLayoutTagSize(layout: TagCellLayout, atIndex index: Int) -> CGSize {
         let tag = tags[index]
-        let cellWidth = tag.lengthOfBytes(using: .utf8) * 12 + 8
+        let textLength = tag.lengthOfBytes(using: .utf8)
+        let multiplier = textLength > 10 ? 10 : textLength
+        let cellWidth = multiplier * 12 + 8
         return CGSize(width: cellWidth, height: 30)
     }
 }

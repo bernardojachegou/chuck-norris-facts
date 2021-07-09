@@ -55,13 +55,13 @@ class FactsViewController: BaseViewController {
         viewModel.output.error
             .asDriver(onErrorDriveWith: .empty())
             .drive { [weak self] error in
-                self?.noFactsMessageLabel.text = error.message()
+                self?.noFactsMessageLabel.text = error.getMessage()
                 self?.displayError(error)
             }
             .disposed(by: disposeBag)
         
         viewModel.output.facts
-            .asDriver(onErrorDriveWith: .just([]))
+            .asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] facts in
                 self?.processFacts(facts)
             })
