@@ -7,7 +7,7 @@ class AutoHeightCollectionView: UICollectionView {
             self.invalidateIntrinsicContentSize()
         }
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return contentSize
     }

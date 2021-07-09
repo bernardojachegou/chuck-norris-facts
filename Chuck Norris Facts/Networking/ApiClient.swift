@@ -11,13 +11,7 @@ class ApiClient {
         config.timeoutIntervalForRequest = timeoutInSeconds
         config.requestCachePolicy = .returnCacheDataElseLoad
         return URLSession(configuration: config).rx.data(request: request)
-            .map { data in
-                do {
-                    return try JSONDecoder().decode(T.self, from: data)
-                } catch let error {
-                    return Observable<Any>.error(error) as! T
-                }
-            }
+            .map { try JSONDecoder().decode(T.self, from: $0) }
             .observe(on: MainScheduler.asyncInstance)
     }
 }

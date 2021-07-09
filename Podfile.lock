@@ -6,12 +6,14 @@ PODS:
   - RxRelay (6.2.0):
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
+  - SwiftLint (0.43.1)
   - Toaster (2.3.0)
 
 DEPENDENCIES:
   - PKHUD (~> 5.0)
   - RxCocoa (= 6.2.0)
   - RxSwift (= 6.2.0)
+  - SwiftLint (= 0.43.1)
   - Toaster (= 2.3.0)
 
 SPEC REPOS:
@@ -20,6 +22,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - SwiftLint
     - Toaster
 
 SPEC CHECKSUMS:
@@ -27,8 +30,9 @@ SPEC CHECKSUMS:
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
+  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
 
-PODFILE CHECKSUM: 3993a8f90607264af91fe4819bbadae0afacb6d0
+PODFILE CHECKSUM: 699c0f1a975a39b205d3b9970c4fa287b1576320
 
 COCOAPODS: 1.10.1

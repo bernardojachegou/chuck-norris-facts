@@ -21,8 +21,6 @@
 		FA1F07B7266150900039FA82 /* Chuck_Norris_Facts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07B5266150900039FA82 /* Chuck_Norris_Facts.xcdatamodeld */; };
 		FA1F07B9266150930039FA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1F07B8266150930039FA82 /* Assets.xcassets */; };
 		FA1F07BC266150930039FA82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA1F07BA266150930039FA82 /* LaunchScreen.storyboard */; };
-		FA1F07C7266150930039FA82 /* Chuck_Norris_FactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07C6266150930039FA82 /* Chuck_Norris_FactsTests.swift */; };
-		FA1F07D2266150930039FA82 /* Chuck_Norris_FactsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1F07D1266150930039FA82 /* Chuck_Norris_FactsUITests.swift */; };
 		FA5C90832695E43E003F6716 /* TagsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90822695E43E003F6716 /* TagsCollectionView.swift */; };
 		FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90842695F0EC003F6716 /* TagCell.swift */; };
 		FA5C90872695F8A1003F6716 /* AutoHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */; };
@@ -37,28 +35,11 @@
 		FACE13CC266DAFE900D66AA3 /* FactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13CB266DAFE900D66AA3 /* FactsViewController.swift */; };
 		FACE13CE266DB06900D66AA3 /* FactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13CD266DB06900D66AA3 /* FactModel.swift */; };
 		FACE13D2266DB53000D66AA3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13D1266DB53000D66AA3 /* Coordinator.swift */; };
-		FACE13D4266DC98700D66AA3 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13D3266DC98700D66AA3 /* ActivityIndicator.swift */; };
 		FACE13D6266DD43E00D66AA3 /* FactCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13D5266DD43E00D66AA3 /* FactCard.swift */; };
 		FACE13D9266DD51000D66AA3 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13D8266DD51000D66AA3 /* UIStackView.swift */; };
 		FACE13DB266DD55A00D66AA3 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACE13DA266DD55A00D66AA3 /* UIView.swift */; };
+		FAD44F402697EAB40092AB89 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44F3F2697EAB40092AB89 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		FA1F07C3266150930039FA82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA1F07A1266150900039FA82 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FA1F07A8266150900039FA82;
-			remoteInfo = "Chuck Norris Facts";
-		};
-		FA1F07CE266150930039FA82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA1F07A1266150900039FA82 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FA1F07A8266150900039FA82;
-			remoteInfo = "Chuck Norris Facts";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2ADD679A3DDA45465227BBC4 /* Pods_CN_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CN_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,12 +59,6 @@
 		FA1F07B8266150930039FA82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA1F07BB266150930039FA82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA1F07BD266150930039FA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA1F07C2266150930039FA82 /* Chuck Norris FactsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chuck Norris FactsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA1F07C6266150930039FA82 /* Chuck_Norris_FactsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chuck_Norris_FactsTests.swift; sourceTree = "<group>"; };
-		FA1F07C8266150930039FA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA1F07CD266150930039FA82 /* Chuck Norris FactsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chuck Norris FactsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA1F07D1266150930039FA82 /* Chuck_Norris_FactsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chuck_Norris_FactsUITests.swift; sourceTree = "<group>"; };
-		FA1F07D3266150930039FA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA5C90822695E43E003F6716 /* TagsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCollectionView.swift; sourceTree = "<group>"; };
 		FA5C90842695F0EC003F6716 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightCollectionView.swift; sourceTree = "<group>"; };
@@ -99,10 +74,10 @@
 		FACE13CB266DAFE900D66AA3 /* FactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewController.swift; sourceTree = "<group>"; };
 		FACE13CD266DB06900D66AA3 /* FactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactModel.swift; sourceTree = "<group>"; };
 		FACE13D1266DB53000D66AA3 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		FACE13D3266DC98700D66AA3 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		FACE13D5266DD43E00D66AA3 /* FactCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCard.swift; sourceTree = "<group>"; };
 		FACE13D8266DD51000D66AA3 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		FACE13DA266DD55A00D66AA3 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		FAD44F3F2697EAB40092AB89 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		FB38AF1082FB44B01B164A5C /* Pods-CN Facts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CN Facts.release.xcconfig"; path = "Target Support Files/Pods-CN Facts/Pods-CN Facts.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,20 +87,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F512F1AB663E1E2E1E70F2F /* Pods_CN_Facts.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FA1F07BF266150930039FA82 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FA1F07CA266150930039FA82 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				FA1F07AB266150900039FA82 /* Chuck Norris Facts */,
-				FA1F07C5266150930039FA82 /* Chuck Norris FactsTests */,
-				FA1F07D0266150930039FA82 /* Chuck Norris FactsUITests */,
 				FA1F07AA266150900039FA82 /* Products */,
 				F58C601F9500E02F48CE8F58 /* Pods */,
 				AB0C53ACF350192882293763 /* Frameworks */,
@@ -188,8 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				FA1F07A9266150900039FA82 /* CN Facts.app */,
-				FA1F07C2266150930039FA82 /* Chuck Norris FactsTests.xctest */,
-				FA1F07CD266150930039FA82 /* Chuck Norris FactsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -206,24 +163,6 @@
 				FA1F07B8266150930039FA82 /* Assets.xcassets */,
 			);
 			path = "Chuck Norris Facts";
-			sourceTree = "<group>";
-		};
-		FA1F07C5266150930039FA82 /* Chuck Norris FactsTests */ = {
-			isa = PBXGroup;
-			children = (
-				FA1F07C6266150930039FA82 /* Chuck_Norris_FactsTests.swift */,
-				FA1F07C8266150930039FA82 /* Info.plist */,
-			);
-			path = "Chuck Norris FactsTests";
-			sourceTree = "<group>";
-		};
-		FA1F07D0266150930039FA82 /* Chuck Norris FactsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				FA1F07D1266150930039FA82 /* Chuck_Norris_FactsUITests.swift */,
-				FA1F07D3266150930039FA82 /* Info.plist */,
-			);
-			path = "Chuck Norris FactsUITests";
 			sourceTree = "<group>";
 		};
 		FA5C90812695E426003F6716 /* Tag Collection */ = {
@@ -317,8 +256,8 @@
 		FACE13CF266DB4F400D66AA3 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				FAD44F3F2697EAB40092AB89 /* ActivityIndicator.swift */,
 				FA1F07B0266150900039FA82 /* BaseViewController.swift */,
-				FACE13D3266DC98700D66AA3 /* ActivityIndicator.swift */,
 				FA5C90862695F8A1003F6716 /* AutoHeightCollectionView.swift */,
 			);
 			path = Base;
@@ -345,6 +284,7 @@
 				FA1F07A6266150900039FA82 /* Frameworks */,
 				FA1F07A7266150900039FA82 /* Resources */,
 				4005275BDDDC7A731A13C5BE /* [CP] Embed Pods Frameworks */,
+				FAD44F3E2697E78D0092AB89 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -354,42 +294,6 @@
 			productName = "Chuck Norris Facts";
 			productReference = FA1F07A9266150900039FA82 /* CN Facts.app */;
 			productType = "com.apple.product-type.application";
-		};
-		FA1F07C1266150930039FA82 /* Chuck Norris FactsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FA1F07D9266150930039FA82 /* Build configuration list for PBXNativeTarget "Chuck Norris FactsTests" */;
-			buildPhases = (
-				FA1F07BE266150930039FA82 /* Sources */,
-				FA1F07BF266150930039FA82 /* Frameworks */,
-				FA1F07C0266150930039FA82 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FA1F07C4266150930039FA82 /* PBXTargetDependency */,
-			);
-			name = "Chuck Norris FactsTests";
-			productName = "Chuck Norris FactsTests";
-			productReference = FA1F07C2266150930039FA82 /* Chuck Norris FactsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		FA1F07CC266150930039FA82 /* Chuck Norris FactsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FA1F07DC266150930039FA82 /* Build configuration list for PBXNativeTarget "Chuck Norris FactsUITests" */;
-			buildPhases = (
-				FA1F07C9266150930039FA82 /* Sources */,
-				FA1F07CA266150930039FA82 /* Frameworks */,
-				FA1F07CB266150930039FA82 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FA1F07CF266150930039FA82 /* PBXTargetDependency */,
-			);
-			name = "Chuck Norris FactsUITests";
-			productName = "Chuck Norris FactsUITests";
-			productReference = FA1F07CD266150930039FA82 /* Chuck Norris FactsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -402,14 +306,6 @@
 				TargetAttributes = {
 					FA1F07A8266150900039FA82 = {
 						CreatedOnToolsVersion = 12.5;
-					};
-					FA1F07C1266150930039FA82 = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = FA1F07A8266150900039FA82;
-					};
-					FA1F07CC266150930039FA82 = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = FA1F07A8266150900039FA82;
 					};
 				};
 			};
@@ -427,8 +323,6 @@
 			projectRoot = "";
 			targets = (
 				FA1F07A8266150900039FA82 /* CN Facts */,
-				FA1F07C1266150930039FA82 /* Chuck Norris FactsTests */,
-				FA1F07CC266150930039FA82 /* Chuck Norris FactsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -440,20 +334,6 @@
 			files = (
 				FA1F07BC266150930039FA82 /* LaunchScreen.storyboard in Resources */,
 				FA1F07B9266150930039FA82 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FA1F07C0266150930039FA82 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FA1F07CB266150930039FA82 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +379,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FAD44F3E2697E78D0092AB89 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -532,42 +429,13 @@
 				FAA064E82697927F0091C34A /* FactsProvider.swift in Sources */,
 				FA1C1E652693ADC600DA19B9 /* TagCellLayout.swift in Sources */,
 				FA5C90852695F0EC003F6716 /* TagCell.swift in Sources */,
-				FACE13D4266DC98700D66AA3 /* ActivityIndicator.swift in Sources */,
+				FAD44F402697EAB40092AB89 /* ActivityIndicator.swift in Sources */,
 				FA1F07AF266150900039FA82 /* SceneDelegate.swift in Sources */,
 				FACE13D9266DD51000D66AA3 /* UIStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FA1F07BE266150930039FA82 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FA1F07C7266150930039FA82 /* Chuck_Norris_FactsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FA1F07C9266150930039FA82 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FA1F07D2266150930039FA82 /* Chuck_Norris_FactsUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		FA1F07C4266150930039FA82 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FA1F07A8266150900039FA82 /* CN Facts */;
-			targetProxy = FA1F07C3266150930039FA82 /* PBXContainerItemProxy */;
-		};
-		FA1F07CF266150930039FA82 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FA1F07A8266150900039FA82 /* CN Facts */;
-			targetProxy = FA1F07CE266150930039FA82 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FA1F07BA266150930039FA82 /* LaunchScreen.storyboard */ = {
@@ -739,86 +607,6 @@
 			};
 			name = Release;
 		};
-		FA1F07DA266150930039FA82 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Chuck Norris FactsTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.joelbanzatto.Chuck-Norris-FactsTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chuck Norris Facts.app/Chuck Norris Facts";
-			};
-			name = Debug;
-		};
-		FA1F07DB266150930039FA82 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Chuck Norris FactsTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.joelbanzatto.Chuck-Norris-FactsTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chuck Norris Facts.app/Chuck Norris Facts";
-			};
-			name = Release;
-		};
-		FA1F07DD266150930039FA82 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Chuck Norris FactsUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.joelbanzatto.Chuck-Norris-FactsUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Chuck Norris Facts";
-			};
-			name = Debug;
-		};
-		FA1F07DE266150930039FA82 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Chuck Norris FactsUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.joelbanzatto.Chuck-Norris-FactsUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Chuck Norris Facts";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -836,24 +624,6 @@
 			buildConfigurations = (
 				FA1F07D7266150930039FA82 /* Debug */,
 				FA1F07D8266150930039FA82 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FA1F07D9266150930039FA82 /* Build configuration list for PBXNativeTarget "Chuck Norris FactsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FA1F07DA266150930039FA82 /* Debug */,
-				FA1F07DB266150930039FA82 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FA1F07DC266150930039FA82 /* Build configuration list for PBXNativeTarget "Chuck Norris FactsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FA1F07DD266150930039FA82 /* Debug */,
-				FA1F07DE266150930039FA82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

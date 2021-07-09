@@ -5,10 +5,10 @@ import RxSwift
 import RxCocoa
 
 class FactsViewController: BaseViewController {
-    
+
     private var viewModel = FactsViewModel()
     private var factCards: [FactCard] = []
-    
+
     private var noFactsMessageLabel: UILabel = {
         let label = UILabel()
         label.text = "No facts yet. Try searching for facts!"
@@ -17,30 +17,30 @@ class FactsViewController: BaseViewController {
         label.textColor = .darkGray
         return label
     }()
-    
-    public var onOpenSearch: (() -> ())?
-    public var onCloseSearch: (() -> ())?
-    
+
+    public var onOpenSearch: (() -> Void)?
+    public var onCloseSearch: (() -> Void)?
+
     override func didSetup() {
         super.didSetup()
         setupNavBar()
         setupBindings()
     }
-    
+
     override func getContentView() -> UIView {
         if factCards.isEmpty {
             return noFactsMessageLabel
         }
         return renderFactCards()
     }
-    
+
     private func setupNavBar() {
         setTitle("Chuck Norris")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(openSearch))
     }
-    
+
     private func setupBindings() {
-        
+
         viewModel.output.loading
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { loading in
@@ -51,7 +51,7 @@ class FactsViewController: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         viewModel.output.error
             .asDriver(onErrorDriveWith: .empty())
             .drive { [weak self] error in
@@ -59,7 +59,7 @@ class FactsViewController: BaseViewController {
                 self?.displayError(error)
             }
             .disposed(by: disposeBag)
-        
+
         viewModel.output.facts
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] facts in
@@ -67,31 +67,31 @@ class FactsViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
     }
-    
+
     private func renderFactCards() -> UIView {
         let list = UIView()
         let stack = UIStackView()
-        
+
         stack.axis = .vertical
         stack.distribution = .fill
         stack.alignment = .fill
         stack.spacing = 8
-        
+
         factCards.forEach { fact in
             stack.addArrangedSubview(fact)
         }
-        
+
         list.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.fillParentView(padding: 0)
-        
+
         return list
     }
-    
+
     @objc private func openSearch() {
         onOpenSearch?()
     }
-    
+
     private func processFacts(_ facts: [FactModel]?) {
         factCards = []
         if let facts = facts, !facts.isEmpty {
@@ -101,7 +101,7 @@ class FactsViewController: BaseViewController {
         } else {
             noFactsMessageLabel.text = "Your search has no results, try another term"
         }
-        
+
         reloadContentView()
     }
 }
@@ -120,7 +120,7 @@ extension FactsViewController: SearchViewControllerDelegate {
         viewModel.input.keyword.onNext(keyword)
         onCloseSearch?()
     }
-    
+
     func searchBy(category: String) {
         viewModel.input.category.onNext(category)
         onCloseSearch?()
