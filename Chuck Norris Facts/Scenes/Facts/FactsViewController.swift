@@ -95,8 +95,8 @@ class FactsViewController: BaseViewController {
     private func processFacts(_ facts: [FactModel]?) {
         factCards = []
         if let facts = facts, !facts.isEmpty {
-            factCards = facts.map { FactCard(fact: $0) { [weak self] factUrlString in
-                self?.shareUrlString(factUrlString)
+            factCards = facts.map { FactCard(fact: $0) { [weak self] fact in
+                self?.shareFact(fact)
             } }
         } else {
             noFactsMessageLabel.text = "Your search has no results, try another term"
@@ -107,11 +107,20 @@ class FactsViewController: BaseViewController {
 }
 
 extension FactsViewController {
-    fileprivate func shareUrlString(_ shareableURLString: String) {
-        guard let shareableURL = URL(string: shareableURLString), UIApplication.shared.canOpenURL(shareableURL) else {
+    fileprivate func shareFact(_ fact: FactModel) {
+        guard let shareableURL = URL(string: fact.url) else {
             return
         }
-        UIApplication.shared.open(shareableURL, options: [:], completionHandler: nil)
+        let shareableImage: Any = UIImage(named: "chuckNorris")!
+        
+        let activityViewController = UIActivityViewController(
+            activityItems: [fact.value, shareableURL, shareableImage],
+            applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            .saveToCameraRoll,
+            .addToReadingList
+        ]
+        navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 }
 
