@@ -5,7 +5,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
 
-    init(source: Observable<E>, disposeAction: @escaping () -> ()) {
+    init(source: Observable<E>, disposeAction: @escaping () -> Void) {
         _source = source
         _dispose = Disposables.create(with: disposeAction)
     }
@@ -43,9 +43,7 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
         return Observable.using({ () -> ActivityToken<O.Element> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
-        }) { t in
-            return t.asObservable()
-        }
+        }, observableFactory: { $0.asObservable() })
     }
 
     private func increment() {

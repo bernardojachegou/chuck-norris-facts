@@ -1,7 +1,7 @@
 import UIKit
 
 public extension TagCellLayout {
-	
+
     enum LayoutAlignment: Int {
 		case left
 		case center
@@ -10,7 +10,7 @@ public extension TagCellLayout {
 }
 
 extension TagCellLayout.LayoutAlignment {
-	
+
 	var distributionDivisionFactor: CGFloat {
 		switch self {
 		case .center:

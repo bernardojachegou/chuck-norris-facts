@@ -7,7 +7,7 @@ public enum RequestType: String {
 protocol APIRequest {
     var method: RequestType { get }
     var path: String { get }
-    var parameters: [String : String] { get }
+    var parameters: [String: String] { get }
 }
 
 extension APIRequest {
@@ -30,4 +30,3 @@ extension APIRequest {
         return request
     }
 }
-

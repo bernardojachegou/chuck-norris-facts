@@ -1,17 +1,17 @@
 import UIKit
 
-protocol TagsCollectionViewDelegate {
+protocol TagsCollectionViewDelegate: AnyObject {
     func didSelect(collectionView: TagsCollectionView, tag: String)
 }
 
 class TagsCollectionView: UIView {
-    
+
     struct TagStyle {
         let foregroundColor: UIColor
         let backgroundColor: UIColor
     }
-    
-    public var delegate: TagsCollectionViewDelegate?
+
+    public weak var delegate: TagsCollectionViewDelegate?
     private var collectionView: AutoHeightCollectionView!
     private var tags: [String] = [] {
         didSet {
@@ -23,17 +23,17 @@ class TagsCollectionView: UIView {
             reloadCollectionView()
         }
     }
-    
+
     init(delegate: TagsCollectionViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         initializeCollectionView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func initializeCollectionView() {
         let layout = TagCellLayout(alignment: .left, delegate: self)
         collectionView = AutoHeightCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -41,17 +41,17 @@ class TagsCollectionView: UIView {
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
-        
+
         addSubview(collectionView)
         collectionView.fillParentView()
-        
+
         reloadCollectionView()
     }
-    
+
     private func reloadCollectionView() {
         collectionView.reloadData()
     }
-    
+
     public func setTags(_ tags: [String]) {
         self.tags = tags
     }
@@ -61,10 +61,10 @@ extension TagsCollectionView: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath)
-        
+
         if let cell = cell as? TagCell {
             let tag = tags[indexPath.row]
             cell.title = tag
@@ -72,7 +72,7 @@ extension TagsCollectionView: UICollectionViewDataSource, UICollectionViewDelega
         }
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = tags[indexPath.row]
         delegate?.didSelect(collectionView: self, tag: tag)

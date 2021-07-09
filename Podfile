@@ -9,6 +9,7 @@ target 'CN Facts' do
   pod 'RxCocoa', '6.2.0'
   pod 'PKHUD', '~> 5.0'
   pod 'Toaster', '2.3.0'
+  pod 'SwiftLint', '0.43.1'
 
 end
 
