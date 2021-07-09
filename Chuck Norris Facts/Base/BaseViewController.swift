@@ -9,7 +9,9 @@ class BaseViewController: UIViewController {
     private weak var mainStackView: UIStackView?
     private var contentView: UIView?
 
-    public override func loadView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setupNavigation()
         setupStructure()
         setup()

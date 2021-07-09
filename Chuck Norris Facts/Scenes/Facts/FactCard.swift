@@ -3,7 +3,7 @@ import UIKit
 class FactCard: UIView {
     private let factSizeForSmallerFont = 80
 
-    private var onShareButtonTap: ((String) -> Void)?
+    private var onShareButtonTap: ((FactModel) -> Void)?
 
     private var fact: FactModel!
 
@@ -62,7 +62,7 @@ class FactCard: UIView {
         return button
     }()
 
-    init(fact: FactModel, onSharing: ((String) -> Void)? = nil) {
+    init(fact: FactModel, onSharing: ((FactModel) -> Void)? = nil) {
         super.init(frame: .zero)
         self.fact = fact
         self.onShareButtonTap = onSharing
@@ -135,7 +135,7 @@ class FactCard: UIView {
     }
 
     @objc private func shareButtonTapped() {
-        onShareButtonTap?(fact.url)
+        onShareButtonTap?(fact)
     }
 
 }
